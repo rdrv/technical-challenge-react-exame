@@ -3,17 +3,17 @@ import { TextField, Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { useState } from "react";
 
-function App() {
+function Form(props) {
   const [search, setSearch] = useState("");
 
+  function searchFunc(e) {
+    e.preventDefault();
+    props.search(search);
+    setSearch("");
+  }
+
   return (
-    <form
-      className="Form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(search);
-      }}
-    >
+    <form className="Form" onSubmit={searchFunc}>
       <TextField
         id="user"
         label="User's name"
@@ -40,4 +40,4 @@ function App() {
   );
 }
 
-export default App;
+export default Form;
