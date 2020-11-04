@@ -1,20 +1,22 @@
+import './User.css';
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-import { red } from "@material-ui/core/colors";
+import { blueGrey } from "@material-ui/core/colors";
+
 
 const useStyles = makeStyles(() => ({
   root: {
     margin: '30px auto',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: blueGrey[500],
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function User(props) {
 
   const classes = useStyles();
 
@@ -23,11 +25,11 @@ export default function RecipeReviewCard() {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            U
+            <img className="avatar" src={props.user.avatar} alt="Avatar" />
           </Avatar>
         }
-        title="Nome do Usuário do Git"
-        subheader="shortcode do Usuário do Git"
+        title={props.user.fullName}
+        subheader={props.user.name}
       />
     </Card>
   );
