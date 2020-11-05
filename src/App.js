@@ -23,11 +23,14 @@ class App extends Component {
             component="h1"
             align="center"
             gutterBottom={true}
-            style={{ fontWeight: '700' }}
+            style={{ fontWeight: "700" }}
           >
             GitHub User's Finder
           </Typography>
-          <Form search={this.data.getData.bind(this.data)} />
+          <Form
+            search={this.data.getData.bind(this.data)}
+            subscribe={this.data.subscribeLoading.bind(this.data)}
+          />
           <User
             user={this.data.user}
             subscribe={this.data.subscribeUser.bind(this.data)}

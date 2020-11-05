@@ -1,20 +1,28 @@
 import "./Form.css";
 import { TextField, Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { useState } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useState, useEffect } from "react";
 
 function Form(props) {
-  
-  const [search, setSearch] = useState("");
+  useEffect(() => {
+    const loadingStatus = (status) => {
+      setLoading(status);
+    };
+    props.subscribe(loadingStatus);
+  });
 
-  function searchFunc(e) {
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function _searchFunc(e) {
     e.preventDefault();
     props.search(search);
     setSearch("");
   }
 
   return (
-    <form className="Form" onSubmit={searchFunc}>
+    <form className="Form" onSubmit={_searchFunc}>
       <TextField
         id="user"
         label="User's name"
@@ -33,7 +41,14 @@ function Form(props) {
         variant="contained"
         color="primary"
         fullWidth
-        startIcon={<SearchIcon />}
+        startIcon={
+          loading ? (
+            <CircularProgress color="inherit" size={22} />
+          ) : (
+            <SearchIcon />
+          )
+        }
+        disabled={loading}
       >
         Find User
       </Button>

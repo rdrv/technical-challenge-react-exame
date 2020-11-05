@@ -6,6 +6,17 @@ class GitHubData {
     this.client_secrets = "39ea98976336a0162f01edb94e59abd03df7152b";
     this._subscribersUser = [];
     this._subscribersRepositories = [];
+    this._subscribersLoading = [];
+  }
+
+  // user methods
+
+  subscribeLoading(func) {
+    this._subscribersLoading.push(func);
+  }
+
+  notifyLoading(status) {
+    this._subscribersLoading.forEach((func) => func(status));
   }
 
   // user methods
@@ -67,6 +78,9 @@ class GitHubData {
   // fetch github data
 
   getData(user) {
+
+    this.notifyLoading(true);
+
     const fetchUrl = `https://api.github.com/users/${user}?client_id=${this.client_id}&client_secrets=${this.client_secrets}`;
 
     fetch(fetchUrl)
@@ -84,9 +98,11 @@ class GitHubData {
           })
           .then((res) => {
             this.setRepo(res);
+            this.notifyLoading(false);
           });
       })
       .catch((err) => {
+        this.notifyLoading(false);
         this.setRepo(undefined);
         return;
       });
